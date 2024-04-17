@@ -1,0 +1,46 @@
+[gd_scene load_steps=9 format=3 uid="uid://dh1jjlexo1dvt"]
+
+[ext_resource type="PackedScene" uid="uid://buimtrdinj8dt" path="res://player.tscn" id="1_knb4n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_40bqq"]
+albedo_color = Color(0.239216, 0.239216, 0.239216, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_32hqt"]
+material = SubResource("StandardMaterial3D_40bqq")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1c511"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f1pvk"]
+albedo_color = Color(0.160784, 0.160784, 0.160784, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_prfu8"]
+material = SubResource("StandardMaterial3D_f1pvk")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bech6"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_epjfg"]
+material = SubResource("StandardMaterial3D_bech6")
+
+[node name="Node" type="Node"]
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(8.48423, 0, 0, 0, 0.165405, 0, 0, 0, 10.6662, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+mesh = SubResource("BoxMesh_32hqt")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+shape = SubResource("BoxShape3D_1c511")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.48392, 0, 0, 0, 3.48776, 0, 0, 0, 1.56637, -1.77908, 1.42076, 2.50209)
+mesh = SubResource("BoxMesh_prfu8")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.08443, 0, 0, 0, 2.92683, 0, 0, 0, 1.31445, 1.68939, 1.61581, 1.89512)
+mesh = SubResource("BoxMesh_epjfg")
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("1_knb4n")]
+transform = Transform3D(-0.984808, 2.82922e-16, -0.173648, 3.48787e-16, 1, -3.48787e-16, 0.173648, -4.04054e-16, -0.984808, -0.508295, 1.95644, -4.10944)
