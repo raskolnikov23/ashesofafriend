@@ -3,7 +3,7 @@ extends CharacterBody3D
 @export var cameraController : Camera3D
 var speed = 5.0
 var jumpvelocity = 4.5
-var mousesens = 0.1
+var mousesens = 0.2
 var tiltlowlimit = deg_to_rad(-90) # kapec := ?
 var tiltuplimit = deg_to_rad(90)
 var mousedelta : Vector2
