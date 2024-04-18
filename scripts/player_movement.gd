@@ -13,10 +13,17 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
+#func _process(delta):
+	#print(Engine.get_frames_per_second())
+	#print(delta)
+	
 func _physics_process(delta):
+	##var kek = get_node("Label")
+	#print(kek)
+	
 	# Add the gravity.
 	if not is_on_floor(): velocity.y -= gravity * delta
-
+	
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor(): velocity.y = jumpvelocity
 		
