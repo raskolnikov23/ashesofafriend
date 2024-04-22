@@ -23,22 +23,6 @@ transform = Transform3D(-0.128856, -0.645365, -0.752928, -0.285089, -0.703097, 0
 light_energy = 3.93
 shadow_enabled = true
 
-[node name="Label" type="Label" parent="."]
-anchors_preset = -1
-anchor_right = 1.00573
-anchor_bottom = 0.981481
-offset_right = -6.10352e-05
-offset_bottom = -1.19209e-05
-theme_override_font_sizes/font_size = 151
-text = "Hello
-"
-metadata/_edit_use_anchors_ = true
-
-[node name="Enemy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_03n4y")]
-transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e-16, 8.74228e-08, -3.48787e-16, -1, 0.932799, 1.46586, -10.7816)
-player = NodePath("../Player")
-metadata/kk = false
-
 [node name="Player" parent="." instance=ExtResource("1_knb4n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.58767, 0.082571, -1.81137)
 
@@ -83,3 +67,7 @@ skeleton = NodePath("../..")
 [node name="Box" parent="NavigationRegion3D" instance=ExtResource("2_52t8d")]
 transform = Transform3D(2.48392, 0, 0, 0, 3.48776, 0, 0, 0, 1.56637, -6.99281, 0.082571, -14.4433)
 skeleton = NodePath("../..")
+
+[node name="Enemy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_03n4y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.76472, 1.49974, -9.67768)
+player = NodePath("../Player")

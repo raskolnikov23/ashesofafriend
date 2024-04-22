@@ -23,6 +23,9 @@ var alertbuffer = defalertbuffer
 var speed = 2
 var defidletime = 2
 var idletime = defidletime
+var attackdist = 1
+var defattackcooldown = 2 # cooldown between attacks
+var attackcooldown = 0	# initial attack cooldown
 
 
 #func _physics_process(delta):
@@ -30,21 +33,28 @@ var idletime = defidletime
 	
 	
 func _process(delta):
+	
 	# raycast stuff
 	if raycast.is_colliding():
 		collidedobject = raycast.get_collider() as Node
 		
 		if collidedobject.name == "Player":
 			state = ALERT
-			print("Detected player, following")
+			print("Detected player, following")	
 			
 	else: 
 		collidedobject = null
 		
 		
+	# reduce attack cooldown if it is activated
+	if attackcooldown > 0:
+		attackcooldown -= delta
+		attackcooldown = clamp(attackcooldown, 0, defattackcooldown)
+		print("Attack cooldown: ", attackcooldown)	
+		
 	match state:
 		IDLE:
-			alertbuffer = defalertbuffer
+			alertbuffer = defalertbuffer # would be better if set once
 			idletime -= delta
 			
 			if idletime <= 0:
@@ -56,6 +66,9 @@ func _process(delta):
 			var nextnavpoint = navagent.get_next_path_position()			
 			velocity = (nextnavpoint - global_transform.origin).normalized() * speed			
 			move_and_slide()
+			look_at(Vector3(nextnavpoint.x, 1, nextnavpoint.z))
+			print(Vector3(nextnavpoint.x, 1, nextnavpoint.z))
+			
 			
 			if navagent.is_navigation_finished():
 				print("Roaming dst reached, going idle")
@@ -70,6 +83,14 @@ func _process(delta):
 			move_and_slide()
 			look_at(Vector3(player.transform.origin.x, 1, player.transform.origin.z))
 			
+			# attack if in range
+			if abs(player.position.x - position.x) < attackdist || abs(player.position.z - position.z) < attackdist:
+				if attackcooldown == 0:
+					var xxx = collidedobject.get_child(1) as Health
+					xxx.modifyhealth(-5)
+					attackcooldown = defattackcooldown
+					return
+			
 			# trigger timer if player lost
 			if not collidedobject or collidedobject.name != "Player":
 				alertbuffer -= delta
@@ -78,11 +99,4 @@ func _process(delta):
 					print("Player lost, going idle")
 					state = IDLE # mos izsauc funkciju set_state(idle) prieks vienreizejiem calliem, lai var resetot alertbuffer
 					idletime = defidletime
-
-			
-	#print(alertbuffer)
-	#print(collidedobject)
-	#print(rotation)
-	
-
-	
+					return

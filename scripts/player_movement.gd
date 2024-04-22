@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody3D
 
 @export var cameraController : Camera3D
@@ -8,6 +9,8 @@ var tiltlowlimit = deg_to_rad(-90) # kapec := ?
 var tiltuplimit = deg_to_rad(90)
 var mousedelta : Vector2
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+@onready var health = $HealthComponent
 ##############################################################################
 
 func _ready():
@@ -18,8 +21,6 @@ func _ready():
 	#print(delta)
 	
 func _physics_process(delta):
-	##var kek = get_node("Label")
-	#print(kek)
 	
 	# Add the gravity.
 	if not is_on_floor(): velocity.y -= gravity * delta
@@ -48,6 +49,10 @@ func _physics_process(delta):
 func _input(event):
 	if event.is_action_pressed("exit"):
 		get_tree().quit()
+		
+	if event.is_action_pressed("attack"):
+		health.modifyhealth(-10)
+		
 		
 # Te nak visi input eventi laikam
 func _unhandled_input(event):
